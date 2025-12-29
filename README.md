@@ -1,6 +1,8 @@
 # vite-package
 
-[![Node CI](https://github.com/lenalurye/frontend-project-11/actions/workflows/nodejs.yml/badge.svg)](https://github.com/lenalurye/frontend-project-11/actions/workflows/nodejs.yml)
+[![Hexlet](https://github.com/lenalurye/frontend-project-11/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/lenalurye/frontend-project-11/actions/workflows/hexlet-check.yml)
+
+[![Sonar Qube](https://github.com/lenalurye/frontend-project-11/actions/workflows/build.yml/badge.svg)](https://github.com/lenalurye/frontend-project-11/actions/workflows/build.yml)
 
 ## Setup
 
