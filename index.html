@@ -1,13 +1,24 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite App</title>
-  </head>
-  <body>
-    <div id="app"></div>
-    <script type="module" src="/src/main.js"></script>
-  </body>
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RSS aggregator</title>
+  <link rel="stylesheet" href="/src/style.css">
+</head>
+
+<body>
+  <div class="container-fluid bg-dark">
+    <form>
+      <div class="input-group mb-3 p-3">
+        <input type="text" class="form-control" placeholder="RSS feed URL" aria-label="RSS feed URL"
+          aria-describedby="button-addon2" />
+        <button class="btn btn-primary" type="submit" id="button-addon2">Add</button>
+      </div>
+    </form>
+  </div>
+</body>
+
 </html>
