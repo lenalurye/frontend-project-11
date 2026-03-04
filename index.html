@@ -7,16 +7,25 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>RSS aggregator</title>
   <link rel="stylesheet" href="/src/style.css">
+  <script type="module" src="./src/main.js"></script>
 </head>
 
 <body>
   <div class="container-fluid bg-dark">
     <form>
       <div class="input-group mb-3 p-3">
-        <input type="text" class="form-control" placeholder="RSS feed URL" aria-label="RSS feed URL"
-          aria-describedby="button-addon2" />
-        <button class="btn btn-primary" type="submit" id="button-addon2">Add</button>
+        <div class="form-floating">
+          <input id="url-input" autofocus type="text" required name="url" aria-label="url" class="form-control w-100"
+            placeholder="ссылка RSS" autocomplete="off">
+          <label for="url-input">Ссылка RSS</label>
+        </div>
+        <button class="btn btn-primary" type="submit" id="add">Добавить</button>
       </div>
+      <p id="success" class="small text-success d-none" role="alert">
+        RSS успешно загружен
+      </p>
+      <p id="error" class="small text-danger d-none" role="alert">
+      </p>
     </form>
   </div>
 </body>

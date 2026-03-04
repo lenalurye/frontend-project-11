@@ -1,24 +1,49 @@
-import './style.css'
-import javascriptLogo from './javascript.svg'
-import viteLogo from '/vite.svg'
-import { setupCounter } from './counter.js'
 
-document.querySelector('#app').innerHTML = `
-  <div>
-    <a href="https://vite.dev" target="_blank">
-      <img src="${viteLogo}" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank">
-      <img src="${javascriptLogo}" class="logo vanilla" alt="JavaScript logo" />
-    </a>
-    <h1>Hello Vite!</h1>
-    <div class="card">
-      <button id="counter" type="button"></button>
-    </div>
-    <p class="read-the-docs">
-      Click on the Vite logo to learn more
-    </p>
-  </div>
-`
+import { proxy, snapshot } from 'valtio/vanilla'
+import { string, object } from 'yup';
+import { setupView } from './view';
 
-setupCounter(document.querySelector('#counter'))
+const addSchema = object({
+  url: string().url('Ссылка должна быть валидным URL').required('Не должно быть пустым'),
+});
+
+const app = () => {
+  const state = proxy({
+    new_url_form: {
+      url: '',
+      state: 'filling', // filling, processing, failed, success
+      error: null,
+    },
+  })
+
+  const urlInput = document.getElementById('url-input')
+  const add = document.getElementById('add')
+
+  setupView(state)
+  
+  urlInput.addEventListener('input', (e) => {
+    state.new_url_form.url = e.target.value
+  })
+
+  add.addEventListener('click', async (e) => {
+    e.preventDefault()
+    const obj = snapshot(state)
+    try {
+      console.log(obj.new_url_form)
+      await addSchema.validate(obj.new_url_form)
+    } catch (err) {
+      state.new_url_form.state = 'failed'
+      state.new_url_form.error = err.message
+      urlInput.focus()
+      return
+    }
+    state.new_url_form.state = 'processing'
+    setTimeout(() => {
+      state.new_url_form.state = 'success'
+      state.new_url_form.url = ''
+      urlInput.focus()
+    }, 1000)
+  })
+}
+
+app()
