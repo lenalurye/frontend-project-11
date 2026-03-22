@@ -2,13 +2,24 @@
 import { proxy, snapshot } from 'valtio/vanilla'
 import { string, object } from 'yup';
 import { setupView } from './view';
+import i18next from 'i18next'
+import ru from './locales/ru.js'
+
+await i18next.init({
+  lng: 'ru',
+  debug: true,
+  resources: {
+    ru,
+  },
+})
 
 const addSchema = object({
-  url: string().url('Ссылка должна быть валидным URL').required('Не должно быть пустым'),
+  url: string().url('invalidUrl').required('requiredUrl'),
 });
 
 const app = () => {
   const state = proxy({
+    language: 'ru',
     new_url_form: {
       url: '',
       state: 'filling', // filling, processing, failed, success
@@ -18,6 +29,7 @@ const app = () => {
 
   const urlInput = document.getElementById('url-input')
   const add = document.getElementById('add')
+
 
   setupView(state)
   
