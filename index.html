@@ -11,21 +11,35 @@
 </head>
 
 <body>
-  <div class="container-fluid bg-dark">
-    <form>
-      <div class="input-group mb-3 p-3">
-        <div class="form-floating">
-          <input id="url-input" autofocus type="text" required name="url" aria-label="url" class="form-control w-100"
-            placeholder="ссылка RSS" autocomplete="off">
-          <label for="url-input" id="url-label"></label>
-        </div>
-        <button class="btn btn-primary" type="submit" id="add"></button>
+  <div class="container">
+    <div class="row bg-dark">
+      <div class="col-12">
+        <form>
+          <div class="input-group mb-3 p-3">
+            <div class="form-floating">
+              <input id="url-input" autofocus type="text" required name="url" aria-label="url"
+                class="form-control w-100" placeholder="ссылка RSS" autocomplete="off">
+              <label for="url-input" id="url-label"></label>
+            </div>
+            <button class="btn btn-primary" type="submit" id="add"></button>
+          </div>
+          <p id="success" class="small text-success d-none" role="alert">
+          </p>
+          <p id="error" class="small text-danger d-none" role="alert">
+          </p>
+        </form>
       </div>
-      <p id="success" class="small text-success d-none" role="alert">
-      </p>
-      <p id="error" class="small text-danger d-none" role="alert">
-      </p>
-    </form>
+    </div>
+    <div class="row mt-3">
+      <div class="col">
+        <h3>Посты</h3>
+        <div id="posts"></div>
+      </div>
+      <div class="col">
+        <h3>Фиды</h3>
+        <div id="feeds"></div>
+      </div>
+    </div>
   </div>
 </body>
 
