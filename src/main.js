@@ -5,6 +5,7 @@ import { setupView } from './view';
 import i18next from 'i18next'
 import ru from './locales/ru.js'
 import axios from 'axios'
+import parse from './parse.js'
 
 await i18next.init({
   lng: 'ru',
@@ -62,6 +63,7 @@ const app = () => {
         url: "https://allorigins.hexlet.app/get",
         params: {
           url: obj.new_url_form.url,
+          disableCache: true
         },
         responseType: "json",
       });
@@ -78,46 +80,33 @@ const app = () => {
       urlInput.focus()
       return
     }
-    let rss = null
+    let rssFeed = null
     try {
-      rss = new DOMParser().parseFromString(response.data.contents, 'application/xml')
+      rssFeed = parse(response.data.contents)
     } catch (err) {
       state.new_url_form.state = 'failed'
       state.new_url_form.error = {message: err.message}
       urlInput.focus()
       return
     }
-    const errorNode = rss.querySelector("parsererror");
-    if (errorNode) {
-      state.new_url_form.state = 'failed'
-      state.new_url_form.error = {message: errorNode.textContent}
-      urlInput.focus()
-      return
-    }
-
-    // Parse feed header
-    const title = rss.querySelector('channel > title')?.textContent
-    const description = rss.querySelector('channel > description')?.textContent
+    const feedId = state.next_feed_id
+    state.next_feed_id += 1
     state.feeds.push({
-      id: state.next_feed_id++,
+      id: feedId,
       url: obj.new_url_form.url,
-      title,
-      description,
+      title: rssFeed.title,
+      description: rssFeed.description,
     })
-
-    // Parse posts
-    const items = rss.querySelectorAll('item')
-    items.forEach((item) => {
-      const title = item.querySelector('title')?.textContent
-      const link = item.querySelector('link')?.textContent
+    rssFeed.posts.forEach((post) => {
+      const postId = state.next_post_id
+      state.next_post_id += 1
       state.posts.push({
-        id: state.next_post_id++,
-        feed_id: state.next_feed_id - 1,
-        title,
-        link,
+        id: postId,
+        feedId: feedId,
+        title: post.title,
+        link: post.link,
       })
     })
-
     state.new_url_form.state = 'success'
     state.new_url_form.url = ''
     urlInput.focus()
