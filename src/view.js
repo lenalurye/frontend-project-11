@@ -10,7 +10,7 @@ export const setupView = (state) => {
   const feeds = document.getElementById('feeds')
   const posts = document.getElementById('posts')
 
-  const render = () => {
+  const renderForm = () => {
     const obj = snapshot(state)
     success.textContent = i18next.t('added')
     urlLabel.textContent = i18next.t('urlLabel')
@@ -34,7 +34,10 @@ export const setupView = (state) => {
       error.classList.add('d-none')
       urlInput.classList.remove('is-invalid')
     }
+  }
 
+  const renderFeeds = () => {
+    const obj = snapshot(state)
     feeds.textContent = ''
     obj.feeds.forEach((feed) => {
       const feedEl = document.createElement('div')
@@ -52,7 +55,10 @@ export const setupView = (state) => {
       feedEl.appendChild(feedBody)
       feeds.appendChild(feedEl)
     })
+  }
 
+  const renderPosts = () => {
+    const obj = snapshot(state)
     posts.textContent = ''
     obj.posts.forEach((post) => {
       const postEl = document.createElement('div')
@@ -70,6 +76,10 @@ export const setupView = (state) => {
       posts.appendChild(postEl)
     })
   }
-  subscribe(state.new_url_form, render)
-  render()
+  subscribe(state.new_url_form, renderForm)
+  subscribe(state.feeds, renderFeeds)
+  subscribe(state.posts, renderPosts)
+  renderForm()
+  renderFeeds()
+  renderPosts()
 };

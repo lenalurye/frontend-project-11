@@ -4,8 +4,9 @@ import { string, object } from 'yup';
 import { setupView } from './view';
 import i18next from 'i18next'
 import ru from './locales/ru.js'
-import axios from 'axios'
 import parse from './parse.js'
+import fetch from './fetch.js'
+import refreshFeed from './refresh.js'
 
 await i18next.init({
   lng: 'ru',
@@ -36,7 +37,6 @@ const app = () => {
   const urlInput = document.getElementById('url-input')
   const add = document.getElementById('add')
 
-
   setupView(state)
   
   urlInput.addEventListener('input', (e) => {
@@ -47,7 +47,6 @@ const app = () => {
     e.preventDefault()
     const obj = snapshot(state)
     try {
-      console.log(obj.new_url_form)
       await addSchema.validate(obj.new_url_form)
     } catch (err) {
       state.new_url_form.state = 'failed'
@@ -56,33 +55,18 @@ const app = () => {
       return
     }
     state.new_url_form.state = 'processing'
-    let response = null
+    let content = null
     try {
-      response = await axios({
-        method: "get",
-        url: "https://allorigins.hexlet.app/get",
-        params: {
-          url: obj.new_url_form.url,
-          disableCache: true
-        },
-        responseType: "json",
-      });
+      content = await fetch(obj.new_url_form.url)
     } catch (err) {
       state.new_url_form.state = 'failed'
       state.new_url_form.error = {message: err.message}
       urlInput.focus()
       return
     }
-    const error = response.data?.status?.error
-    if (error) {
-      state.new_url_form.state = 'failed'
-      state.new_url_form.error = {message: error.code}
-      urlInput.focus()
-      return
-    }
     let rssFeed = null
     try {
-      rssFeed = parse(response.data.contents)
+      rssFeed = parse(content)
     } catch (err) {
       state.new_url_form.state = 'failed'
       state.new_url_form.error = {message: err.message}
@@ -110,6 +94,8 @@ const app = () => {
     state.new_url_form.state = 'success'
     state.new_url_form.url = ''
     urlInput.focus()
+
+    refreshFeed(state, feedId, obj.new_url_form.url)
   })
 }
 
