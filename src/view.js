@@ -86,6 +86,11 @@ export const setupView = (state) => {
         previewBody.textContent = post.description
         previewLink.href = post.link
         previewModal.show()
+        state.posts.forEach((p) => {
+          if (p.id === post.id) {
+            p.unread = false
+          }
+        })
       })
       postLink.href = post.link
       postLink.textContent = post.title
