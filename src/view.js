@@ -1,5 +1,6 @@
 import i18next from 'i18next';
 import { subscribe, snapshot } from 'valtio/vanilla'
+import { Modal } from 'bootstrap'
 
 export const setupView = (state) => {
   const urlInput = document.getElementById('url-input')
@@ -9,6 +10,12 @@ export const setupView = (state) => {
   const urlLabel = document.getElementById('url-label')
   const feeds = document.getElementById('feeds')
   const posts = document.getElementById('posts')
+  const previewModal = new Modal(document.getElementById('previewModal'))
+  const previewLink = document.getElementById('previewLink')
+
+  previewLink.addEventListener('click', () => {
+    previewModal.hide()
+  })
 
   const renderForm = () => {
     const obj = snapshot(state)
@@ -62,17 +69,30 @@ export const setupView = (state) => {
     posts.textContent = ''
     obj.posts.forEach((post) => {
       const postEl = document.createElement('div')
-      postEl.classList.add('card', 'mb-1')
-      const postBody = document.createElement('div')
-      postBody.classList.add('card-body')
-      const postTitle = document.createElement('h6')
-      postTitle.classList.add('card-title')
+      postEl.classList.add('row', 'mb-2', 'align-items-center')
+      const postTitle = document.createElement('div')
+      postTitle.classList.add('col-8', post.unread ? 'fw-bold' : 'fw-normal')
       const postLink = document.createElement('a')
+      postLink.classList.add(post.unread ? 'fw-bold' : 'fw-normal')
+      const postButton = document.createElement('button')
+      const buttonDiv = document.createElement('div')
+      buttonDiv.classList.add('col-4')
+      postButton.classList.add('btn', 'btn-outline-primary')
+      postButton.textContent = 'Просмотр'
+      postButton.addEventListener('click', () => {
+        const previewTitle = document.getElementById('previewTitle')
+        const previewBody = document.getElementById('previewBody')
+        previewTitle.textContent = post.title
+        previewBody.textContent = post.description
+        previewLink.href = post.link
+        previewModal.show()
+      })
       postLink.href = post.link
       postLink.textContent = post.title
       postTitle.appendChild(postLink)
-      postBody.appendChild(postTitle)
-      postEl.appendChild(postBody)
+      postEl.appendChild(postTitle)
+      postEl.appendChild(buttonDiv)
+      buttonDiv.appendChild(postButton)
       posts.appendChild(postEl)
     })
   }

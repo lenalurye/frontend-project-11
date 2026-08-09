@@ -89,6 +89,8 @@ const app = () => {
         feedId: feedId,
         title: post.title,
         link: post.link,
+        description: post.description,
+        unread: true,
       })
     })
     state.new_url_form.state = 'success'

@@ -31,6 +31,8 @@ export default async function refreshFeed(state, feedId, url) {
         feedId: feedId,
         title: post.title,
         link: post.link,
+        description: post.description,
+        unread: true,
       })
     })
     refreshFeed(state, feedId, url)
