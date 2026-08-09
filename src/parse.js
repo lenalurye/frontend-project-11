@@ -2,12 +2,12 @@ export default function parseRss(xmlString) {
   let rss = null
   try {
     rss = new DOMParser().parseFromString(xmlString, 'application/xml')
-  } catch (err) {
-    throw new Error(`Failed to parse XML: ${err.message}`)
+  } catch {
+    throw new Error('invalidRss')
   }
   const errorNode = rss.querySelector("parsererror");
   if (errorNode) {
-    throw new Error(`Failed to parse XML: ${errorNode.textContent}`)
+    throw new Error('invalidRss')
   }
 
     // Parse feed header

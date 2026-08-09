@@ -54,13 +54,19 @@ const app = () => {
       urlInput.focus()
       return
     }
+    if (obj.feeds.some((feed) => feed.url === obj.new_url_form.url)) {
+      state.new_url_form.state = 'failed'
+      state.new_url_form.error = {code: 'duplicateUrl'}
+      urlInput.focus()
+      return
+    }
     state.new_url_form.state = 'processing'
     let content = null
     try {
       content = await fetch(obj.new_url_form.url)
-    } catch (err) {
+    } catch {
       state.new_url_form.state = 'failed'
-      state.new_url_form.error = {message: err.message}
+      state.new_url_form.error = {code: 'networkError'}
       urlInput.focus()
       return
     }
@@ -69,7 +75,7 @@ const app = () => {
       rssFeed = parse(content)
     } catch (err) {
       state.new_url_form.state = 'failed'
-      state.new_url_form.error = {message: err.message}
+      state.new_url_form.error = {code: err.message}
       urlInput.focus()
       return
     }
