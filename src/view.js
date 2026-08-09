@@ -68,7 +68,7 @@ export const setupView = (state) => {
     const obj = snapshot(state)
     posts.textContent = ''
     obj.posts.forEach((post) => {
-      const postEl = document.createElement('div')
+      const postEl = document.createElement('li')
       postEl.classList.add('row', 'mb-2', 'align-items-center')
       const postTitle = document.createElement('div')
       postTitle.classList.add('col-8', post.unread ? 'fw-bold' : 'fw-normal')
