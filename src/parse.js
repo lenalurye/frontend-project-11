@@ -13,7 +13,7 @@ export default function parseRss(xmlString) {
   // Check if its a valid RSS feed
   const channel = rss.querySelector('rss > channel')
   if (!channel) {
-    throw new Error('invalidRss')
+    // throw new Error('invalidRss')
   }
 
   // Parse feed header
