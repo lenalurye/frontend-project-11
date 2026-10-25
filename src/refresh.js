@@ -19,9 +19,9 @@ export default async function refreshFeed(state, feedId, url) {
       refreshFeed(state, feedId, url)
       return
     }
-    const existingPosts = Object.fromEntries(state.posts.filter((post) => post.feedId === feedId).map((post) => [post.link, true]))
-    rssFeed.posts.forEach((post) => {
-      if(existingPosts[post.link]) {
+    const existingPosts = Object.fromEntries(state.posts.filter((post) => post.feedId === feedId).map((post) => [post.key, true]))
+    rssFeed.posts.reverse().forEach((post) => {
+      if(existingPosts[post.key]) {
         return
       }
       const postId = state.next_post_id

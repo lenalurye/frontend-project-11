@@ -73,6 +73,7 @@ export const setupView = (state) => {
       const postTitle = document.createElement('div')
       postTitle.classList.add('col-8', post.unread ? 'fw-bold' : 'fw-normal')
       const postLink = document.createElement('a')
+      postLink.target = '_blank'
       postLink.classList.add(post.unread ? 'fw-bold' : 'fw-normal')
       const postButton = document.createElement('button')
       const buttonDiv = document.createElement('div')
