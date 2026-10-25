@@ -72,10 +72,10 @@ export const setupView = (state) => {
       postEl.classList.add('row', 'mb-2', 'align-items-center')
       const postTitle = document.createElement('div')
       postTitle.classList.add('col-8', post.unread ? 'fw-bold' : 'fw-normal')
-      postTitle.dataset.seen = post.unread ? 'false' : 'true'
       const postLink = document.createElement('a')
       postLink.target = '_blank'
       postLink.classList.add(post.unread ? 'fw-bold' : 'fw-normal')
+      postLink.dataset.seen = post.unread ? 'false' : 'true'
       const postButton = document.createElement('button')
       const buttonDiv = document.createElement('div')
       buttonDiv.classList.add('col-4')
