@@ -96,6 +96,7 @@ const app = () => {
         title: post.title,
         link: post.link,
         description: post.description,
+        key: post.key,
         unread: true,
       })
     })

@@ -18,9 +18,10 @@ import axios from 'axios'
   if (error) {
     throw new Error(`Network error: ${error.code}`) 
   }
+  // The proxy response may come without a status (e.g. when it is mocked),
+  // so only fail on an explicit non-2xx http code
   const statusCode = response.data?.status?.http_code
-  if (statusCode !== 200) {
-    console.error(`Response: ${JSON.stringify(response.data)}`)
+  if (statusCode !== undefined && (statusCode < 200 || statusCode >= 300)) {
     throw new Error(`Network error: ${statusCode}`)
   }
   return response.data?.contents

@@ -13,7 +13,7 @@ export default function parseRss(xmlString) {
   // Check if its a valid RSS feed
   const channel = rss.querySelector('rss > channel')
   if (!channel) {
-    // throw new Error('invalidRss')
+    throw new Error('invalidRss')
   }
 
   // Parse feed header
@@ -32,11 +32,11 @@ export default function parseRss(xmlString) {
     let link = item.querySelector('link')?.textContent
     // if link doesnt start with https:// or http://, skip it
     if (!link || !link.startsWith('http://') && !link.startsWith('https://')) {
-    //  link = undefined
+      link = undefined
     }
     const description = item.querySelector('description')?.textContent
     if (!title && !link && !description) {
-      // return
+      return
     } 
     rssFeed.posts.push({
       title,
