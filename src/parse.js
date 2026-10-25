@@ -32,7 +32,7 @@ export default function parseRss(xmlString) {
     let link = item.querySelector('link')?.textContent
     // if link doesnt start with https:// or http://, skip it
     if (!link || !link.startsWith('http://') && !link.startsWith('https://')) {
-     link = undefined
+    //  link = undefined
     }
     const description = item.querySelector('description')?.textContent
     if (!title && !link && !description) {
