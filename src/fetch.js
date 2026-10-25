@@ -18,9 +18,9 @@ import axios from 'axios'
   if (error) {
     throw new Error(`Network error: ${error.code}`) 
   }
-  // const statusCode = response.data?.status?.http_code
-  // if (statusCode !== 200) {
-  //   throw new Error(`Network error: ${statusCode}`)
-  // }
+  const statusCode = response.data?.status?.http_code
+  if (statusCode !== 200) {
+    throw new Error(`Network error: ${statusCode}`)
+  }
   return response.data?.contents
 }
