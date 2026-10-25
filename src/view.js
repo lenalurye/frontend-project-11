@@ -70,6 +70,7 @@ export const setupView = (state) => {
     obj.posts.forEach((post) => {
       const postEl = document.createElement('li')
       postEl.classList.add('row', 'mb-2', 'align-items-center')
+      postEl.dataset.seen = post.unread ? 'false' : 'true'
       const postTitle = document.createElement('div')
       postTitle.classList.add('col-8', post.unread ? 'fw-bold' : 'fw-normal')
       const postLink = document.createElement('a')
