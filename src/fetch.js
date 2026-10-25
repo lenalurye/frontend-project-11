@@ -20,7 +20,8 @@ import axios from 'axios'
   }
   const statusCode = response.data?.status?.http_code
   if (statusCode !== 200) {
-    // throw new Error(`Network error: ${statusCode}`)
+    console.error(`Response: ${JSON.stringify(response.data)}`)
+    throw new Error(`Network error: ${statusCode}`)
   }
   return response.data?.contents
 }
