@@ -36,7 +36,7 @@ export default function parseRss(xmlString) {
     }
     const description = item.querySelector('description')?.textContent
     if (!title && !link && !description) {
-      return
+      // return
     } 
     rssFeed.posts.push({
       title,
